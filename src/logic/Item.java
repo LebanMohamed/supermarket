@@ -1,11 +1,16 @@
+package logic;
+
 import promotion.BuyNGet1FreePromotion;
+import promotion.MealDealPromotion;
 import promotion.MultiPricedPromotion;
 
-class Item {
+public class Item {
     private char sku;
     private double price;
     private BuyNGet1FreePromotion buyNGet1FreePromotion;
     private MultiPricedPromotion multiPricedPromotion;
+
+    private MealDealPromotion mealDealPromotion;
 
     private int promotionQuantity;
 
@@ -22,16 +27,24 @@ class Item {
         this.multiPricedPromotion = promotion;
     }
 
+    public boolean hasMealDealPromotion() {
+        return this.mealDealPromotion != null;
+    }
+
+    public MealDealPromotion getMealDealPromotion() {
+        return this.mealDealPromotion;
+    }
+
+    public void setMealDealPromotion(MealDealPromotion promotion) {
+        this.mealDealPromotion = promotion;
+    }
+
     public boolean hasBuyNGet1FreePromotion() {
         return buyNGet1FreePromotion != null;
     }
 
     public boolean hasMultiPricedPromotion() {
         return multiPricedPromotion != null;
-    }
-
-    public BuyNGet1FreePromotion getBuyNGet1FreePromotion() {
-        return buyNGet1FreePromotion;
     }
 
     public MultiPricedPromotion getMultiPricedPromotion() {

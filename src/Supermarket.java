@@ -1,6 +1,10 @@
+import logic.Item;
+import logic.Store;
 import promotion.BuyNGet1FreePromotion;
+import promotion.MealDealPromotion;
 import promotion.MultiPricedPromotion;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +25,19 @@ public class Supermarket {
         myStore.setMultiPricedPromotion('B', new MultiPricedPromotion(2, 1.25));
 
         myStore.setPromotionQuantity('C', 3);
-        myStore.setBuyNGet1FreePromotion('C', new BuyNGet1FreePromotion(3, 3, 1));
+        myStore.setBuyNGet1FreePromotion('C', new BuyNGet1FreePromotion(3, 3));
+
+        myStore.setMealDealPromotion(Arrays.asList('D', 'E'),
+                new MealDealPromotion(3.00, Arrays.asList('D', 'E')));
 
         Map<Character, Integer> basket = new HashMap<>();
-        basket.put('B', 3);
-        basket.put('C', 4);
+        basket.put('D', 1);
+        basket.put('E', 1);
+        basket.put('C', 3);
+        basket.put('B', 2);
 
         double totalCost = myStore.getTotalCost(basket);
-        System.out.println(totalCost);
+        System.out.println("The total cost of the basket is: £" + totalCost);
 
     }
 }

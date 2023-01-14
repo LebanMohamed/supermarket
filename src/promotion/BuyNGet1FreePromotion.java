@@ -3,12 +3,10 @@ package promotion;
 public class BuyNGet1FreePromotion {
     private int promotionQuantity;
     private int triggerQuantity;
-    private int freeQuantity;
 
-    public BuyNGet1FreePromotion(int promotionQuantity, int triggerQuantity, int freeQuantity) {
+    public BuyNGet1FreePromotion(int promotionQuantity, int triggerQuantity) {
         this.promotionQuantity = promotionQuantity;
         this.triggerQuantity = triggerQuantity;
-        this.freeQuantity = freeQuantity;
     }
 
     public int getPromotionQuantity() {
@@ -19,8 +17,5 @@ public class BuyNGet1FreePromotion {
         return triggerQuantity;
     }
 
-    public int getFreeQuantity() {
-        return freeQuantity;
-    }
 }
 
