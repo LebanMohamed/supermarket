@@ -1,15 +1,14 @@
-package logic;
+package main.logic;
 
-import promotion.BuyNGet1FreePromotion;
-import promotion.MealDealPromotion;
-import promotion.MultiPricedPromotion;
+import main.promotion.BuyNGet1FreePromotion;
+import main.promotion.MealDealPromotion;
+import main.promotion.MultiPricedPromotion;
 
 public class Item {
     private char sku;
     private double price;
     private BuyNGet1FreePromotion buyNGet1FreePromotion;
     private MultiPricedPromotion multiPricedPromotion;
-
     private MealDealPromotion mealDealPromotion;
 
     private int promotionQuantity;

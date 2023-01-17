@@ -1,8 +1,9 @@
-package logic;
+package main.logic;
 
-import promotion.BuyNGet1FreePromotion;
-import promotion.MealDealPromotion;
-import promotion.MultiPricedPromotion;
+import main.exception.NegativeQuantityException;
+import main.promotion.BuyNGet1FreePromotion;
+import main.promotion.MealDealPromotion;
+import main.promotion.MultiPricedPromotion;
 
 import java.util.*;
 
@@ -10,12 +11,10 @@ public class Store {
     private ArrayList<Item> items;
 
     private Map<Character, Item> itemMap;
-    Set<Character> appliedPromos;
 
     public Store() {
         items = new ArrayList<>();
         itemMap = new HashMap<>();
-        appliedPromos = new HashSet<>();
     }
 
     public void addItem(Item item) {
@@ -62,15 +61,15 @@ public class Store {
         }
     }
 
-    public double getTotalCost(Map<Character, Integer> basket) {
+    public double getTotalCost(Map<Character, Integer> basket) throws NegativeQuantityException {
         double totalCost = 0.0;
+        Set<Character> appliedPromos = new HashSet<>();
+
         for (Map.Entry<Character, Integer> entry : basket.entrySet()) {
             Item item = getItem(entry.getKey());
             if (item != null) {
                 int quantity = entry.getValue();
                 double price = item.getPrice();
-                MealDealPromotion itemPromo = item.getMealDealPromotion();
-
                 if (item.hasBuyNGet1FreePromotion()) {
                     int promotionQuantity = item.getPromotionQuantity();
                     if (quantity >= promotionQuantity) {
@@ -92,10 +91,10 @@ public class Store {
                     }
                 } else if (item.hasMealDealPromotion() && !appliedPromos.contains(entry.getKey())) {
                     List<Character> dealItems = item.getMealDealPromotion().getItems();
-                    double dealPrice = item.getMealDealPromotion().getPromotionPrice();
+                    double dealPrice = item.getMealDealPromotion().getPromotionQuantity();
                     boolean hasAllItems = true;
                     for (char dealItem : dealItems) {
-                        if (!basket.containsKey(dealItem) || basket.get(dealItem) < 1) {
+                        if (!basket.containsKey(dealItem)) {
                             hasAllItems = false;
                             break;
                         }
@@ -103,18 +102,21 @@ public class Store {
                     if (hasAllItems) {
                         for (char dealItem : dealItems) {
                             basket.put(dealItem, basket.get(dealItem) - 1);
+                            appliedPromos.add(dealItem);
                         }
-                        appliedPromos.add(entry.getKey());
                         totalCost += dealPrice;
                     } else {
                         totalCost += quantity * price;
                     }
-                }
-                else {
+                } else {
                     totalCost += quantity * price;
                 }
             }
         }
+
+        if (totalCost < 0)
+            throw new NegativeQuantityException("Quantity cannot be less than 0.");
+
         return totalCost;
     }
 

@@ -1,4 +1,4 @@
-package promotion;
+package main.promotion;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class MealDealPromotion {
         this.items = items;
     }
 
-    public double getPromotionPrice() {
+    public double getPromotionQuantity() {
         return promotionPrice;
     }
 

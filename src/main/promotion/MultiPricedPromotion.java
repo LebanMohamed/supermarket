@@ -1,4 +1,4 @@
-package promotion;
+package main.promotion;
 
 public class MultiPricedPromotion {
     private int promotionQuantity;
