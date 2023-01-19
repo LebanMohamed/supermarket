@@ -11,7 +11,7 @@ public class MealDealPromotion {
         this.items = items;
     }
 
-    public double getPromotionQuantity() {
+    public double getPromotionPrice() {
         return promotionPrice;
     }
 

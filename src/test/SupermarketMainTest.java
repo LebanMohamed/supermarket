@@ -1,5 +1,6 @@
 package test;
 
+import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.logic.Item;
 import main.logic.Store;
@@ -28,11 +29,10 @@ class SupermarketMainTest {
         myStore.addItem(new Item('D', 2.50));
     }
 
-
     @Test
-    public void testGetTotal_hasBuyNGet1FreePromotion() throws NegativeQuantityException {
+    public void testGetTotal_hasBuyNGet1FreePromotion() throws NegativeQuantityException, NegativePromotionQuantityException {
         setUp();
-        myStore.setBuyNGet1FreePromotion('A', new BuyNGet1FreePromotion(3, 3));
+        myStore.setBuyNGet1FreePromotion('A', new BuyNGet1FreePromotion(3));
 
         Map<Character, Integer> basket = new HashMap<>();
         basket.put('A', 3);
@@ -43,7 +43,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_multiPriced() throws NegativeQuantityException {
+    public void testGetTotal_multiPriced() throws NegativeQuantityException, NegativePromotionQuantityException {
         setUp();
         myStore.setPromotionQuantity('B', 2);
         myStore.setMultiPricedPromotion('B', new MultiPricedPromotion(2, 1.25));
@@ -86,7 +86,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_allPromotionCombination() throws NegativeQuantityException {
+    public void testGetTotal_allPromotionCombination() throws NegativeQuantityException, NegativePromotionQuantityException {
         setUp();
         myStore.setMealDealPromotion(Arrays.asList('A', 'C'), new MealDealPromotion(0.2, Arrays.asList('A', 'C')));
 
@@ -94,7 +94,7 @@ class SupermarketMainTest {
         myStore.setMultiPricedPromotion('B', new MultiPricedPromotion(2, 1.25));
 
         myStore.setPromotionQuantity('D', 3);
-        myStore.setBuyNGet1FreePromotion('D', new BuyNGet1FreePromotion(3, 3));
+        myStore.setBuyNGet1FreePromotion('D', new BuyNGet1FreePromotion(3));
 
         Map<Character, Integer> basket = new HashMap<>();
         basket.put('A', 1);

@@ -1,11 +1,14 @@
 package main.logic;
 
+import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.promotion.BuyNGet1FreePromotion;
 import main.promotion.MealDealPromotion;
 import main.promotion.MultiPricedPromotion;
 
 import java.util.*;
+
+import static main.util.SuperMarketStaticText.*;
 
 public class Store {
     private ArrayList<Item> items;
@@ -31,21 +34,32 @@ public class Store {
         return null;
     }
 
-    public void setPromotionQuantity(char sku, int promotionQuantity) {
+    public void setPromotionQuantity(char sku, int promotionQuantity) throws NegativePromotionQuantityException {
+        if (promotionQuantity < 0)
+            throw new NegativePromotionQuantityException(PROMOTION_QUANTITY_ZERO_EXCEPTION_MESSAGE);
+
         Item item = getItem(sku);
+
         if (item != null) {
             item.setPromotionQuantity(promotionQuantity);
         }
     }
 
-    public void setBuyNGet1FreePromotion(char sku, BuyNGet1FreePromotion promotion) {
+    public void setBuyNGet1FreePromotion(char sku, BuyNGet1FreePromotion promotion) throws NegativePromotionQuantityException {
+        if (promotion.getPromotionQuantity() < 0)
+            throw new NegativePromotionQuantityException(BUY1_GET_ONE_FREE_ZERO_EXCEPTION_MESSAGE);
+
         Item item = getItem(sku);
+
         if (item != null) {
             item.setBuyNGet1FreePromotion(promotion);
         }
     }
 
-    public void setMultiPricedPromotion(char sku, MultiPricedPromotion promotion) {
+    public void setMultiPricedPromotion(char sku, MultiPricedPromotion promotion) throws NegativePromotionQuantityException {
+        if (promotion.getPromotionQuantity() < 0)
+            throw new NegativePromotionQuantityException(MULTI_PRICED_ZERO_EXCEPTION_MESSAGE);
+
         Item item = getItem(sku);
         if (item != null) {
             item.setMultiPricedPromotion(promotion);
@@ -91,23 +105,14 @@ public class Store {
                     }
                 } else if (item.hasMealDealPromotion() && !appliedPromos.contains(entry.getKey())) {
                     List<Character> dealItems = item.getMealDealPromotion().getItems();
-                    double dealPrice = item.getMealDealPromotion().getPromotionQuantity();
-                    boolean hasAllItems = true;
+                    double dealPrice = item.getMealDealPromotion().getPromotionPrice();
+
                     for (char dealItem : dealItems) {
-                        if (!basket.containsKey(dealItem)) {
-                            hasAllItems = false;
-                            break;
-                        }
+                        basket.put(dealItem, basket.get(dealItem) - 1);
+                        appliedPromos.add(dealItem);
                     }
-                    if (hasAllItems) {
-                        for (char dealItem : dealItems) {
-                            basket.put(dealItem, basket.get(dealItem) - 1);
-                            appliedPromos.add(dealItem);
-                        }
-                        totalCost += dealPrice;
-                    } else {
-                        totalCost += quantity * price;
-                    }
+
+                    totalCost += dealPrice;
                 } else {
                     totalCost += quantity * price;
                 }
@@ -115,7 +120,7 @@ public class Store {
         }
 
         if (totalCost < 0)
-            throw new NegativeQuantityException("Quantity cannot be less than 0.");
+            throw new NegativeQuantityException(TOTAL_COST_ZERO_EXCEPTION_MESSAGE);
 
         return totalCost;
     }

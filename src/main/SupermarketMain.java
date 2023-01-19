@@ -1,5 +1,6 @@
 package main;
 
+import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.logic.Item;
 import main.logic.Store;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 class SupermarketMain {
 
-    public static void main(String[] args) throws NegativeQuantityException {
+    public static void main(String[] args) throws NegativeQuantityException, NegativePromotionQuantityException {
 
         Store myStore = new Store();
 
@@ -28,7 +29,7 @@ class SupermarketMain {
         myStore.setMultiPricedPromotion('B', new MultiPricedPromotion(2, 1.25));
 
         myStore.setPromotionQuantity('C', 3);
-        myStore.setBuyNGet1FreePromotion('C', new BuyNGet1FreePromotion(3, 3));
+        myStore.setBuyNGet1FreePromotion('C', new BuyNGet1FreePromotion(3));
 
         myStore.setMealDealPromotion(Arrays.asList('A', 'C'),
                 new MealDealPromotion(0.2, Arrays.asList('A', 'C')));
@@ -36,7 +37,6 @@ class SupermarketMain {
         Map<Character, Integer> basket = new HashMap<>();
         basket.put('A', 1);
         basket.put('C', 111);
-
 
         double totalCost = myStore.getTotalCost(basket);
         System.out.println("The total cost of the basket is: £" + totalCost);
