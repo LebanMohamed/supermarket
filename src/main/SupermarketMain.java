@@ -1,5 +1,6 @@
 package main;
 
+import main.exception.BasketNegativeException;
 import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.logic.Item;
@@ -12,10 +13,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static main.util.SuperMarketStaticText.TOTAL_COST_MESSAGE;
 
 class SupermarketMain {
 
-    public static void main(String[] args) throws NegativeQuantityException, NegativePromotionQuantityException {
+    public static void main(String[] args) throws NegativeQuantityException, NegativePromotionQuantityException, BasketNegativeException {
 
         Store myStore = new Store();
 
@@ -37,8 +39,11 @@ class SupermarketMain {
         Map<Character, Integer> basket = new HashMap<>();
         basket.put('A', 1);
         basket.put('C', 111);
+        basket.put('B', 3);
+        basket.put('D', 3);
+        basket.put('E', 6);
 
         double totalCost = myStore.getTotalCost(basket);
-        System.out.println("The total cost of the basket is: £" + totalCost);
+        System.out.println(TOTAL_COST_MESSAGE + totalCost);
     }
 }

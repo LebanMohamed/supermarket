@@ -1,5 +1,6 @@
 package test;
 
+import main.exception.BasketNegativeException;
 import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.logic.Item;
@@ -30,7 +31,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_hasBuyNGet1FreePromotion() throws NegativeQuantityException, NegativePromotionQuantityException {
+    public void testGetTotal_hasBuyNGet1FreePromotion() throws NegativeQuantityException, NegativePromotionQuantityException, BasketNegativeException {
         setUp();
         myStore.setBuyNGet1FreePromotion('A', new BuyNGet1FreePromotion(3));
 
@@ -43,7 +44,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_multiPriced() throws NegativeQuantityException, NegativePromotionQuantityException {
+    public void testGetTotal_multiPriced() throws NegativeQuantityException, NegativePromotionQuantityException, BasketNegativeException {
         setUp();
         myStore.setPromotionQuantity('B', 2);
         myStore.setMultiPricedPromotion('B', new MultiPricedPromotion(2, 1.25));
@@ -57,7 +58,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_mealDealPromotion() throws NegativeQuantityException {
+    public void testGetTotal_mealDealPromotion() throws NegativeQuantityException, BasketNegativeException {
         setUp();
         myStore.setMealDealPromotion(Arrays.asList('A', 'C'),
                 new MealDealPromotion(0.2, Arrays.asList('A', 'C')));
@@ -72,7 +73,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_mealDealPromotionMultipleCharacters() throws NegativeQuantityException {
+    public void testGetTotal_mealDealPromotionMultipleCharacters() throws NegativeQuantityException, BasketNegativeException {
         setUp();
         myStore.setMealDealPromotion(Arrays.asList('A', 'C'), new MealDealPromotion(0.2, Arrays.asList('A', 'C')));
 
@@ -86,7 +87,7 @@ class SupermarketMainTest {
     }
 
     @Test
-    public void testGetTotal_allPromotionCombination() throws NegativeQuantityException, NegativePromotionQuantityException {
+    public void testGetTotal_allPromotionCombination() throws NegativeQuantityException, NegativePromotionQuantityException, BasketNegativeException {
         setUp();
         myStore.setMealDealPromotion(Arrays.asList('A', 'C'), new MealDealPromotion(0.2, Arrays.asList('A', 'C')));
 

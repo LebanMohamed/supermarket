@@ -1,7 +1,6 @@
 package main.promotion;
 
 import java.util.*;
-
 public class MealDealPromotion {
     private double promotionPrice;
     private List<Character> items;
@@ -18,6 +17,5 @@ public class MealDealPromotion {
     public List<Character> getItems() {
         return items;
     }
-
 
 }

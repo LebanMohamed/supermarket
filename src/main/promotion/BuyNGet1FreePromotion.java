@@ -11,6 +11,5 @@ public class BuyNGet1FreePromotion {
         return promotionQuantity;
     }
 
-
 }
 

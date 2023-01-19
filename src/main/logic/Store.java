@@ -1,5 +1,6 @@
 package main.logic;
 
+import main.exception.BasketNegativeException;
 import main.exception.NegativePromotionQuantityException;
 import main.exception.NegativeQuantityException;
 import main.promotion.BuyNGet1FreePromotion;
@@ -75,7 +76,10 @@ public class Store {
         }
     }
 
-    public double getTotalCost(Map<Character, Integer> basket) throws NegativeQuantityException {
+    public double getTotalCost(Map<Character, Integer> basket) throws NegativeQuantityException, BasketNegativeException {
+
+        checkBasketNegative(basket);
+
         double totalCost = 0.0;
         Set<Character> appliedPromos = new HashSet<>();
 
@@ -123,6 +127,12 @@ public class Store {
             throw new NegativeQuantityException(TOTAL_COST_ZERO_EXCEPTION_MESSAGE);
 
         return totalCost;
+    }
+
+    private void checkBasketNegative(Map<Character, Integer> basket) throws BasketNegativeException {
+        for (Map.Entry<Character, Integer> basketItems : basket.entrySet())
+            if (basketItems.getValue() <= 0)
+                throw new BasketNegativeException(BASKET_ZERO_EXCEPTION_MESSAGE);
     }
 
 }

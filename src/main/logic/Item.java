@@ -71,5 +71,4 @@ public class Item {
         this.promotionQuantity = promotionQuantity;
     }
 
-
 }
